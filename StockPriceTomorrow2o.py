@@ -87,19 +87,7 @@ def itc(selected_stock):
     
     # Calculate MAE and RMSE for the test data
     test_mae = mean_absolute_error(scaler.inverse_transform(y_test), test_predictions)
-    test_rmse = np.sqrt(mean_squared_error(scaler.inverse_transform(y_test), test_predictions))
-
-
-    
-
-    # Make predictions on the training data
-    #train_predictions = model.predict(X_train)
-    #train_predictions = scaler.inverse_transform(train_predictions)
-
-    # Make predictions on the test data
-    #test_predictions = model.predict(X_test)
-    #test_predictions = scaler.inverse_transform(test_predictions)
-    
+    test_rmse = np.sqrt(mean_squared_error(scaler.inverse_transform(y_test), test_predictions))   
  
     # Plot the actual vs predicted values for the training data
     plt.figure(figsize=(12, 6))
@@ -120,12 +108,10 @@ def itc(selected_stock):
     plt.legend()
     plt.title("Actual vs Predicted (Test Data)")
     plt.xlabel("Date")
-    plt.ylabel("Price")
-    
+    plt.ylabel("Price")   
     
     plt.savefig("test_plot.png")
     plt.close()  # Close the plot to release resources
-
 
     # Get the historical data for the last 30 days
     history_data = yf.Ticker(selected_stock).history(period="30d")
@@ -133,7 +119,6 @@ def itc(selected_stock):
     # Extract the closing price values from the historical data
     history_close = history_data["Close"].values
     
-
     # Normalize the historical data
     history_scaled_data = scaler.transform(history_close.reshape(-1, 1))
 
@@ -149,8 +134,6 @@ def itc(selected_stock):
     #test_plot_path = test_plot_path.replace("\\","//")
     
     return history_prediction[0][0], round(train_mae,2),round(train_rmse,2),round(test_mae,2),round(test_rmse,2),
-
-
 
 def main():
     from PIL import Image
